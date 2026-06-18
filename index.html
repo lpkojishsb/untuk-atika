@@ -287,28 +287,29 @@
 
         // Fungsi Kirim ke Gmail via Formspree Backend milik Farel
         function dimaafin() {
-            const formspreeUrl = "https://formspree.io/f/mjgdqodv"; 
 
-            const formData = new FormData();
-            formData.append("Nama Pacar", "Atika Junia");
-            formData.append("Pertanyaan 1 (Aktivitas)", dataJawaban[0]);
-            formData.append("Pertanyaan 2 (Barang)", dataJawaban[1]);
-            formData.append("Pertanyaan 3 (Tempat)", dataJawaban[2]);
-            formData.append("Status Maaf", "SUDAH DIMAAFIN! 🥰❤️");
+    const formspreeUrl = "https://formspree.io/f/mjgdqodv"; 
 
-                fetch(formspreeUrl, {
+    const formData = new FormData();
+    formData.append("Nama Pacar", "Atika Junia");
+    formData.append("Pertanyaan 1 (Aktivitas)", dataJawaban[0]);
+    formData.append("Pertanyaan 2 (Barang)", dataJawaban[1]);
+    formData.append("Pertanyaan 3 (Tempat)", dataJawaban[2]);
+    formData.append("Status Maaf", "SUDAH DIMAAFIN! 🥰❤️");
+
+    fetch(formspreeUrl, {
         method: "POST",
         body: formData,
         headers: {
             'Accept': 'application/json'
         }
-    }
+    })
     .then(response => {
         if (response.ok) {
-            // 1. Jalankan animasi konfeti meriah
+            // Jalankan animasi konfeti meriah
             jalankanKonfetiMeriah();
             
-            // 2. Munculkan pop-up kustom yang cantik
+            // Munculkan pop-up kustom
             document.getElementById('customAlert').style.display = 'block';
         } else {
             alert("Aduh, ada sedikit kendala saat mengirim pesan.");
@@ -316,6 +317,9 @@
     })
     .catch(error => {
         alert("Terjadi kesalahan jaringan, silakan coba lagi.");
+    });
+}
+
     });
 
             });
