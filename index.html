@@ -281,7 +281,8 @@
             btnNo.style.right = "20px";
             btnNo.style.top = "0px";
         }
-// Fungsi Kirim Backend - SUDAH RAPI & RAHASIA
+
+        // Fungsi Baru Tanpa Alert Bawaan HP
         function dimaafin() {
             const formspreeUrl = "https://formspree.io/f/mjgdqodv"; 
 
@@ -298,14 +299,22 @@
                 headers: {
                     'Accept': 'application/json'
                 }
-            }).then(response => {
-                // Notifikasi pop-up manis tanpa bocorin sistem email
-                alert("Yeayyy! Makasih banyak ya Atika Junia udah dimaafin.. Sayang kamu banget! 🥰❤️");
-            }).catch(error => {
-                alert("Makasih banyak ya Atika mbul udah dimaafin! 🥰❤️");
             });
+
+            // LANGKAH PENTING: Mengubah kotak web langsung di layar tanpa memanggil alert()
+            const container = document.querySelector(".container");
+            container.innerHTML = `
+                <div class="heart-icon">💖✨</div>
+                <h2 style="color: #ff477e; font-size: 18px;">Yeayyy! Makasih banyak ya Atika Junia udah dimaafin.. Sayang kamu banget! 🥰❤️</h2>
+                <br>
+                <button onclick="keluarWeb()" style="background-color: #ff477e;">Selesai</button>
+            `;
         }
-        
+
+        // Fungsi Pengalihan Keluar Web
+        function keluarWeb() {
+            window.location.href = "https://www.google.com";
+        }
     </script>
 </body>
 </html>
