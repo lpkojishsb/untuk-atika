@@ -89,7 +89,6 @@
             transform: translateY(-2px);
         }
 
-        /* Animasi Sweet / Pop-up */
         .sweet-overlay {
             display: none;
             position: fixed;
@@ -111,7 +110,6 @@
             animation: pop 0.6s ease-in-out infinite alternate;
         }
 
-        /* Layar Akhir & Tombol Pindah */
         .final-screen {
             display: none;
         }
@@ -135,7 +133,6 @@
             background-color: #495057;
         }
 
-        /* Keyframes Animasi */
         @keyframes heartbeat {
             0% { transform: scale(1); }
             20% { transform: scale(1.1); }
@@ -161,10 +158,10 @@
         <div class="sweet-text" id="sweet-message">Aww.. Sosweet Banget! 🥰</div>
     </div>
 
-    <!-- UTAMA CONTAINER -->
+    <!-- MAIN CONTAINER -->
     <div class="container">
         
-        <!-- BAGIAN PERTANYAAN (1, 2, 3) -->
+        <!-- BAGIAN PERTANYAAN -->
         <div id="question-section">
             <div class="heart-icon" id="main-heart">❤️</div>
             <h2 id="question-title"></h2>
@@ -173,7 +170,7 @@
             <button onclick="nextQuestion()" id="btn-next">Lanjut Atika mbul.. ➡️</button>
         </div>
 
-        <!-- BAGIAN AKHIR (MAAF & TOMBOL PILIHAN) -->
+        <!-- BAGIAN AKHIR -->
         <div id="final-section" class="final-screen">
             <div class="heart-icon">🥺💔</div>
             <h2 style="color: #d90429;">Maaf yaa sayangg udah bikin kamu sakit hati... 🥺👉👈</h2>
@@ -285,88 +282,30 @@
             btnNo.style.top = "0px";
         }
 
-        // Fungsi Kirim ke Gmail via Formspree Backend milik Farel
+        // Fungsi Kirim Backend - SUDAH RAPI & RAHASIA
         function dimaafin() {
+            const formspreeUrl = "https://formspree.io/f/mjgdqodv"; 
 
-    const formspreeUrl = "https://formspree.io/f/mjgdqodv"; 
+            const formData = new FormData();
+            formData.append("Nama Pacar", "Atika Junia");
+            formData.append("Pertanyaan 1 (Aktivitas)", dataJawaban[0]);
+            formData.append("Pertanyaan 2 (Barang)", dataJawaban[1]);
+            formData.append("Pertanyaan 3 (Tempat)", dataJawaban[2]);
+            formData.append("Status Maaf", "SUDAH DIMAAFIN! 🥰❤️");
 
-    const formData = new FormData();
-    formData.append("Nama Pacar", "Atika Junia");
-    formData.append("Pertanyaan 1 (Aktivitas)", dataJawaban[0]);
-    formData.append("Pertanyaan 2 (Barang)", dataJawaban[1]);
-    formData.append("Pertanyaan 3 (Tempat)", dataJawaban[2]);
-    formData.append("Status Maaf", "SUDAH DIMAAFIN! 🥰❤️");
-
-    fetch(formspreeUrl, {
-        method: "POST",
-        body: formData,
-        headers: {
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => {
-        if (response.ok) {
-            // Jalankan animasi konfeti meriah
-            jalankanKonfetiMeriah();
-            
-            // Munculkan pop-up kustom
-            document.getElementById('customAlert').style.display = 'block';
-        } else {
-            alert("Aduh, ada sedikit kendala saat mengirim pesan.");
-        }
-    })
-    .catch(error => {
-        alert("Terjadi kesalahan jaringan, silakan coba lagi.");
-    });
-}
-
-    });
-
+            fetch(formspreeUrl, {
+                method: "POST",
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                // Notifikasi pop-up manis tanpa bocorin sistem email
+                alert("Yeayyy! Makasih banyak ya Atika Junia udah dimaafin.. Sayang kamu banget! 🥰❤️");
+            }).catch(error => {
+                alert("Makasih banyak ya Atika mbul udah dimaafin! 🥰❤️");
             });
         }
     </script>
-    <!-- Elemen Pop-up Kustom Cantik -->
-<div id="customAlert" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); text-align: center; width: 85%; max-width: 350px; z-index: 9999; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
-    <h2 style="font-size: 2rem; margin-bottom: 10px;">🎉 ❤️ 🎉</h2>
-    <p style="font-family: 'Poppins', sans-serif; font-size: 1.1rem; color: #333; line-height: 1.5; margin: 0;">
-        Yeayyy! Makasih banyak ya <strong>Atika Junia</strong> udah dimaafın.. akuu sayangg kamu bangett 🥺🥺❤️❤️
-    </p>
-    <button onclick="document.getElementById('customAlert').style.display = 'none';" style="margin-top: 15px; background: #ff4b5c; color: white; border: none; padding: 10px 25px; border-radius: 20px; font-weight: bold; cursor: pointer; width: 100%;">Love You!</button>
-</div>
-
-<!-- Script Library Konfeti -->
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-<script>
-function jalankanKonfetiMeriah() {
-    var duration = 5 * 1000;
-    var animationEnd = Date.now() + duration;
-    var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 10000 };
-
-    function randomInRange(min, max) {
-      return Math.random() * (max - min) + min;
-    }
-
-    var interval = setInterval(function() {
-      var timeLeft = animationEnd - Date.now();
-
-      if (timeLeft <= 0) {
-        return clearInterval(interval);
-      }
-
-      var particleCount = 50 * (timeLeft / duration);
-      confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
-      confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
-    }, 250);
-}
-</script>
-
-<style>
-@keyframes popIn {
-    0% { transform: translate(-50%, -50%) scale(0.7); opacity: 0; }
-    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-}
-</style>
-
 </body>
 </html>
