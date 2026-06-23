@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semangat Kerjanya Sayang! ✨</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Sacramento&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ffe5ec 0%, #ffc2d1 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            overflow: hidden;
+        }
+
+        .phone-container {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(229, 107, 135, 0.25);
+            padding: 30px 20px;
+            max-width: 380px;
+            width: 100%;
+            height: 550px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            position: relative;
+        }
+
+        .slider-wrapper {
+            width: 100%;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.5s ease-in-out;
+            text-align: center;
+            pointer-events: none;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+
+        .emoji {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            display: inline-block;
+            animation: float 2.5s ease-in-out infinite;
+        }
+
+        h1 {
+            font-family: 'Sacramento', cursive;
+            font-size: 3.2rem;
+            color: #ff477e;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 0.95rem;
+            color: #495057;
+            line-height: 1.6;
+            padding: 0 10px;
+        }
+
+        .highlight {
+            color: #ff477e;
+            font-weight: 600;
+        }
+
+        /* Navigasi Bawah */
+        .navigation {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: #ffc2d1;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .dot.active {
+            background: #ff477e;
+            width: 20px;
+            border-radius: 10px;
+        }
+
+        .btn-nav {
+            background: linear-gradient(45deg, #ff477e, #ff7096);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(255, 71, 126, 0.2);
+            transition: transform 0.2s;
+        }
+
+        .btn-nav:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone-container">
+        <div class="slider-wrapper">
+            
+            <!-- Slide 1 -->
+            <div class="slide active">
+                <div class="emoji">✨</div>
+                <h1>Halo Sayang...</h1>
+                <p>Cuma mau kasih pesan kecil buat nemenin hari kamu. Sebelum mulai sibuk, ambil napas dalam-dalam dulu yaa.</p>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="slide">
+                <div class="emoji">💪</div>
+                <h1>Kamu Hebat!</h1>
+                <p>Terima kasih ya sudah selalu berjuang dan kerja keras sampai hari ini. Aku bener-bener <span class="highlight">bangga banget</span> punya kamu.</p>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="slide">
+                <div class="emoji">☕</div>
+                <h1>Jangan Lupa...</h1>
+                <p>Kalau capek di tempat kerja, istirahat sejenak ya. Jangan dipaksa, minum air yang cukup, dan jangan telat makan siang!</p>
+            </div>
+
+            <!-- Slide 4 -->
+            <div class="slide">
+                <div class="emoji">🫶</div>
+                <h1>I Love You</h1>
+                <p>Apa pun yang kamu hadapi hari ini, kamu pasti bisa melewatinya. Semangat kerjanya, nanti pas pulang aku tungguin ya! ❤️</p>
+            </div>
+
+        </div>
+
+        <!-- Bagian Kontrol Bawah -->
+        <div class="navigation">
+            <button class="btn-nav" id="prevBtn" onclick="changeSlide(-1)" style="visibility: hidden;">Kembali</button>
+            <div class="dots" id="dotsContainer"></div>
+            <button class="btn-nav" id="nextBtn" onclick="changeSlide(1)">Lanjut</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const dotsContainer = document.getElementById('dotsContainer');
+
+        // Buat indikator dot sesuai jumlah slide
+        slides.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (index === 0) dot.classList.add('active');
+            dotsContainer.appendChild(dot);
+        });
+
+        const dots = document.querySelectorAll('.dot');
+
+        function changeSlide(direction) {
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+
+            currentSlide += direction;
+
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+
+            // Atur tombol Kembali
+            if (currentSlide === 0) {
+                prevBtn.style.visibility = 'hidden';
+            } else {
+                prevBtn.style.visibility = 'visible';
+            }
+
+            // Atur tombol Lanjut/Selesai
+            if (currentSlide === slides.length - 1) {
+                nextBtn.innerText = 'Mmuach!';
+            } else {
+                nextBtn.innerText = 'Lanjut';
+            }
+
+            // Jika menekan tombol terakhir kali
+            if (currentSlide === slides.length) {
+                currentSlide = slides.length - 1;
+            }
+        }
+    </script>
+</body>
+</html>
